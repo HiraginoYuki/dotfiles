@@ -1,0 +1,17 @@
+zmodule environment
+zmodule input
+zmodule termtitle
+zmodule utility
+
+# zmodule duration-info
+# zmodule git-info
+# zmodule asciiship
+zmodule hiraginoyuki/df2 --source zshrc.50.PS1
+
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+
+zmodule zdharma-continuum/history-search-multi-word
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions

@@ -1,0 +1,38 @@
+### {{{
+export PATH="${PATH}:${HOME}/.local/bin"
+export XDG_DATA_DIR="${XDG_DATA_DIR:-${HOME}/.local/share}"
+export ZIM_HOME="${XDG_DATA_DIR}/zim"
+setopt HIST_IGNORE_ALL_DUPS
+bindkey -e
+WORDCHARS=${WORDCHARS//[\/]}
+### }}}
+
+
+### Initialize zim (https://zimfw.sh) {{{
+if [ ! "${ZIM_HOME}/init.zsh" -nt "${ZDOTDIR:-${HOME}}/.zimrc" ]; then
+  source "${ZIM_HOME}/zimfw.zsh" init -q
+fi
+source "${ZIM_HOME}/init.zsh"
+
+
+zstyle ':zim:zmodule' use 'degit'
+zstyle ':zim:input' double-dot-expand yes
+
+# Can be set when `zsh-users/zsh-autosuggestions`
+# is the last module in `~/.zimrc`.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# zsh-users/zsh-history-substring-search
+zmodload -F zsh/terminfo +p:terminfo
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+for key ('k') bindkey -M vicmd ${key} history-substring-search-up
+for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+unset key
+
+
+# vim: et sw=2 fdm=marker
