@@ -15,7 +15,7 @@ fi
 source "${ZIM_HOME}/init.zsh"
 
 
-zstyle ':zim:zmodule' use 'degit'
+command -v git > /dev/null || zstyle ':zim:zmodule' use 'degit'
 zstyle ':zim:input' double-dot-expand yes
 
 # Can be set when `zsh-users/zsh-autosuggestions`
