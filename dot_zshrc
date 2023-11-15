@@ -8,6 +8,15 @@ WORDCHARS=${WORDCHARS//[\/]}
 ### }}}
 
 
+### change current directory of tmux {{{
+autoload -Uz add-zsh-hook
+function on_cd {
+  tmux run-shell "tmux attach-session -t . -c '$PWD' ; true"
+}
+add-zsh-hook chpwd on_cd
+### }}}
+
+
 ### Initialize zim (https://zimfw.sh) {{{
 if [ ! "${ZIM_HOME}/init.zsh" -nt "${ZDOTDIR:-${HOME}}/.zimrc" ]; then
   source "${ZIM_HOME}/zimfw.zsh" init -q
