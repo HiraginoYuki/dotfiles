@@ -8,12 +8,20 @@ WORDCHARS=${WORDCHARS//[\/]}
 ### }}}
 
 
-### change current directory of tmux {{{
-autoload -Uz add-zsh-hook
-function on_cd {
-  tmux run-shell "tmux attach-session -t . -c '$PWD' ; true"
-}
-add-zsh-hook chpwd on_cd
+### hooks related to tmux {{{
+if [ -n "${TMUX}" ]; then
+  autoload -Uz add-zsh-hook
+
+  function on_cd_tmux {
+    tmux run-shell "tmux attach-session -t . -c '$PWD' ; true"
+  }
+  add-zsh-hook chpwd on_cd_tmux
+
+  function source_tmux_env {
+    eval "$(tmux show-environment -s | grep -vE '^unset ')"
+  }
+  add-zsh-hook precmd source_tmux_env
+fi
 ### }}}
 
 
