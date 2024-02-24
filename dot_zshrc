@@ -5,6 +5,11 @@ export ZIM_HOME="${XDG_DATA_DIR}/zim"
 setopt HIST_IGNORE_ALL_DUPS
 bindkey -e
 WORDCHARS=${WORDCHARS//[\/]}
+
+# homebrew
+if [ -x /usr/local/bin/brew ]; then
+  eval $(/usr/local/bin/brew shellenv zsh)
+fi
 ### }}}
 
 
